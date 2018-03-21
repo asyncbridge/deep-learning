@@ -16,5 +16,4 @@ This project is made available under the [MIT License](https://github.com/asyncb
 ## References
 
 [1] http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
-
 [2] https://github.com/sujaybabruwad/LeNet-in-Tensorflow
