@@ -13,7 +13,6 @@ __Prerequisite__: Python 3.6.3 and later,
 
 This project is made available under the [MIT License](https://github.com/asyncbridge/honeybeee/blob/master/LICENSE).
 
-## References
+## Study List
 
-[1] http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/  
-[2] https://github.com/sujaybabruwad/LeNet-in-Tensorflow
+[**LeNet-5 ▸**](https://github.com/asyncbridge/deep-learning/tree/master/LeNet5)
