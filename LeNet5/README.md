@@ -8,7 +8,7 @@ I used Tensorboard and estimate the accuracy of this model as follows.
   
 ![Alt text](https://github.com/asyncbridge/deep-learning/blob/master/LeNet5/LeNet-5_Tensorboard.png?raw=true)  
 
-My Paper Review is as follows.    
+My paper review is as follows.    
   
 http://arclab.tistory.com/150  
 
