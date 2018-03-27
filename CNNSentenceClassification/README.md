@@ -1,4 +1,4 @@
-# CNN for Sentence Classification 
+# CNN for Sentence Classification
 I tried to train/evaluate the Movie Review data using with CNN for Sentence Classification.  
 
 Additionally, I added multi-channel training code and loading code from word2vec.  
@@ -19,10 +19,10 @@ http://arclab.tistory.com/149
 It is based on a paper and the other references as below.  
 
 ## References
-[1] https://arxiv.org/abs/1408.5882/
-[2] http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
-[3] https://github.com/dennybritz/cnn-text-classification-tf/
-[4] https://github.com/yoonkim/CNN_sentence/
-[5] https://github.com/cahya-wirawan/cnn-text-classification-tf/
-[6] https://github.com/harvardnlp/sent-conv-torch/
+[1] https://arxiv.org/abs/1408.5882/  
+[2] http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/  
+[3] https://github.com/dennybritz/cnn-text-classification-tf/  
+[4] https://github.com/yoonkim/CNN_sentence/  
+[5] https://github.com/cahya-wirawan/cnn-text-classification-tf/  
+[6] https://github.com/harvardnlp/sent-conv-torch/  
 [7] https://github.com/mmihaltz/word2vec-GoogleNews-vectors/

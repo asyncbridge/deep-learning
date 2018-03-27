@@ -15,5 +15,5 @@ This project is made available under the [MIT License](https://github.com/asyncb
 
 ## Study List
 
-[**LeNet-5 ▸**](https://github.com/asyncbridge/deep-learning/tree/master/LeNet5)
+[**LeNet-5 ▸**](https://github.com/asyncbridge/deep-learning/tree/master/LeNet5)  
 [**CNN for Sentence Classification ▸**](https://github.com/asyncbridge/deep-learning/tree/master/CNNSentenceClassification)
