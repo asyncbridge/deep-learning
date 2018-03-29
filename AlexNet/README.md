@@ -20,8 +20,6 @@ http://arclab.tistory.com/156
 
 It is based on a paper and the other references as below.  
 
-Now updating...  
-
 ## References
 [1] https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf    
 [2] http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/  
