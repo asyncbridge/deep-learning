@@ -9,6 +9,11 @@ The original source is from https://github.com/dennybritz/cnn-text-classificatio
 ![Alt text](https://github.com/asyncbridge/deep-learning/blob/master/CNNSentenceClassification/CNN_sentence_classification.png?raw=true)  
   
 I used Tensorboard and estimate the accuracy of this model as follows.  
+
+## Development Environment
+__Prerequisite__: Python >= 3.6.3,  
+                  Tensorflow >= r1.3.0  
+				  
   
 ![Alt text](https://github.com/asyncbridge/deep-learning/blob/master/CNNSentenceClassification/CNN_sentence_tensorboard.png?raw=true)  
 

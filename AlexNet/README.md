@@ -6,6 +6,10 @@ It is based on a paper and the other references as below.
   
 I used Tensorboard and estimate the accuracy of this model.
 
+## Development Environment
+__Prerequisite__: Python >= 3.6.3,  
+                  Tensorflow >= r1.6.0  
+
 My paper review is as follows.    
   
 http://arclab.tistory.com/156  
