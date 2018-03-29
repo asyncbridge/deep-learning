@@ -8,22 +8,21 @@ The original source is from https://github.com/dennybritz/cnn-text-classificatio
 
 ![Alt text](https://github.com/asyncbridge/deep-learning/blob/master/CNNSentenceClassification/CNN_sentence_classification.png?raw=true)  
   
-I used Tensorboard and estimate the accuracy of this model as follows.  
+I used Tensorboard and estimate the accuracy of this model as follows.  				  
+  
+![Alt text](https://github.com/asyncbridge/deep-learning/blob/master/CNNSentenceClassification/CNN_sentence_tensorboard.png?raw=true)  
 
 ## Development Environment
 __Prerequisite__: Python >= 3.6.3,  
                   Tensorflow >= r1.3.0  
-				  
-  
-![Alt text](https://github.com/asyncbridge/deep-learning/blob/master/CNNSentenceClassification/CNN_sentence_tensorboard.png?raw=true)  
 
+## References
 My paper review is as follows.    
   
 http://arclab.tistory.com/149  
 
 It is based on a paper and the other references as below.  
 
-## References
 [1] https://arxiv.org/abs/1408.5882/  
 [2] http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/  
 [3] https://github.com/dennybritz/cnn-text-classification-tf/  
