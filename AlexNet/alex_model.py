@@ -1,7 +1,46 @@
 import tensorflow as tf
 
+def preprocess_image(image):
+    # #1, Horizontal Reflection
+    image = tf.image.random_flip_left_right(image)
+
+    # #2, Altering RGB Intensities
+    image = tf.image.random_brightness(image, max_delta=0.4)
+    image = tf.image.random_contrast(image, lower=0.6, upper=1.4)
+    image = tf.image.random_saturation(image, lower=0.6, upper=1.4)
+
+    return image
+
+def augment_image(input_tensor):
+    output_tensor = tf.map_fn(preprocess_image, input_tensor)
+    return output_tensor
+
+
 class AlexNetModel(object):
     def __init__(self, learning_rate=0.01):
+
+        tf.set_random_seed(1234)
+
+        # Input Layer
+        with tf.name_scope("Layer_Input") as scope:
+            # Input CIFAR-100 image size, 32x32x3
+            # Color Channel 3(RGB)
+            x = tf.placeholder(tf.int32, [None, 32, 32, 1], name="InputX")
+
+            # Augmentation
+            # #1, Random Crop(24x24) and Horizontal Reflection
+            distorted_input_x = tf.random_crop(x, [-1, 24, 24, 3])
+
+            # #1, Horizontal Reflection
+            # #2, Altering RGB Intensities
+            self.input_x = augment_image(distorted_input_x)
+
+            # CIFAR-100 Label (0~99), one-hot vector
+            y = tf.placeholder(tf.int32, [None, 1], name="InputY")
+            y_one_hot = tf.one_hot(y, 100)
+            self.input_y = tf.reshape(y_one_hot, [-1, 100])
+
+'''
         # Input Layer
         with tf.name_scope("Layer_Input") as scope:
             # Input CIFAR-100 image size, 32x32x3
@@ -87,3 +126,4 @@ class AlexNetModel(object):
         with tf.name_scope("Accuracy") as scope:
             correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
             self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="Accuracy")
+'''

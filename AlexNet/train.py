@@ -11,7 +11,7 @@ tf.flags.DEFINE_integer("num_of_checkpoints", 5, "Number of Checkpoints")
 tf.flags.DEFINE_float("cross_val_percent", 0.1, "The ratio of cross-validation set in the training set")
 tf.flags.DEFINE_integer("epochs", 10, "Epochs")
 tf.flags.DEFINE_integer("batch_size", 128, "Batch Size")
-tf.flags.DEFINE_float("learning_rate", 1e-3, "Learning Rate")
+tf.flags.DEFINE_float("learning_rate", 1e-2, "Learning Rate")
 tf.flags.DEFINE_integer("cross_validation_step_once", 100, "Cross-Validation after this step")
 tf.flags.DEFINE_integer("checkpoint_save_once", 100, "Save checkpoint after this step")
 
@@ -24,44 +24,47 @@ for attr, value in sorted(FLAGS.flag_values_dict().items()) :
 print("\nTraining...\n")
 
 def main(argv=None):
-    with tf.Graph().as_default():
+    with tf.Graph().as_default(), tf.device('/cpu:0'):
+
+
+        # Load CIFAR-100 dataset
+        (X_train, y_train), (X_test, y_test) = load_data()
+
+        # Separate train, cross validation, test data
+        # Training Data: 45,000
+        # Cross-Validation Data: 5,000
+        # Test Data: 10,000
+
+        # Randomly shuffle data
+        np.random.seed(10)
+        shuffle_indices = np.random.permutation(np.arange(len(X_train)))
+        x_shuffled = X_train[shuffle_indices]
+        y_shuffled = y_train[shuffle_indices]
+
+        # Split train/cross-validation set
+        dev_sample_index = -1 * int(FLAGS.cross_val_percent * float(len(X_train)))
+        X_train, X_validation = x_shuffled[:dev_sample_index], x_shuffled[dev_sample_index:]
+        y_train, y_validation = y_shuffled[:dev_sample_index], y_shuffled[dev_sample_index:]
+        print("Split -- Train/Cross-Validation: {:d}/{:d}\n".format(len(y_train), len(y_validation)))
+
+        # Check Shape
+        print("Dataset shape: ")
+        print("X_train.shape={}", X_train.shape)
+        print("y_train.shape={}", y_train.shape)
+        print("X_validation.shape={}", X_validation.shape)
+        print("y_validation.shape={}", y_validation.shape)
+        print("X_test.shape={}", X_test.shape)
+        print("y_test.shape={}", y_test.shape)
+
+        # Create a AlexNet model
+        cnn = AlexNetModel()
+
         session_conf = tf.ConfigProto(
-            allow_soft_placement=True,
-            log_device_placement=False)
+                        allow_soft_placement=True,
+                        log_device_placement=False)
 
         sess = tf.Session(config=session_conf)
 
-        with sess.as_default():
-            with tf.device('/cpu:0'):
-
-                # Load CIFAR-100 dataset
-                (X_train, y_train), (X_test, y_test) = load_data()
-
-                # Separate train, cross validation, test data
-                # Training Data: 45,000
-                # Cross-Validation Data: 5,000
-                # Test Data: 10,000
-
-                # Randomly shuffle data
-                np.random.seed(10)
-                shuffle_indices = np.random.permutation(np.arange(len(X_train)))
-                x_shuffled = X_train[shuffle_indices]
-                y_shuffled = y_train[shuffle_indices]
-
-                # Split train/cross-validation set
-                dev_sample_index = -1 * int(FLAGS.cross_val_percent * float(len(X_train)))
-                X_train, X_validation = x_shuffled[:dev_sample_index], x_shuffled[dev_sample_index:]
-                y_train, y_validation = y_shuffled[:dev_sample_index], y_shuffled[dev_sample_index:]
-                print("Splited -- Train/Cross-Validation: {:d}/{:d}\n".format(len(y_train), len(y_validation)))
-
-                # Check Shape
-                print("Dataset shape: ")
-                print("X_train.shape={}", X_train.shape)
-                print("y_train.shape={}", y_train.shape)
-                print("X_validation.shape={}", X_validation.shape)
-                print("y_validation.shape={}", y_validation.shape)
-                print("X_test.shape={}", X_test.shape)
-                print("y_test.shape={}", y_test.shape)
 '''          
     
                 # Reshape input data to 28x28 size to 32x32 size with zero-padding
