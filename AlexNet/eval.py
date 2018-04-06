@@ -1,20 +1,18 @@
 import tensorflow as tf
 import os
 import helper
-from tensorflow.examples.tutorials.mnist import input_data
+from tensorflow.python.keras._impl.keras.datasets.cifar100 import load_data
 import numpy as np
-import csv
 
 print("Tensorflow Ver.={}".format(tf.__version__))
 
 tf.flags.DEFINE_string("checkpoint_dir", "", "Checkpoint directory from training run")
 
 FLAGS = tf.flags.FLAGS
-FLAGS._parse_flags()
+
 print("\nParameters:")
-for attr, value in sorted(FLAGS.__flags.items()):
+for attr, value in sorted(FLAGS.flag_values_dict().items()) :
     print("{}={}".format(attr.upper(), value))
-print("")
 
 # Evaluation
 print("\nEvaluating...\n")
@@ -32,28 +30,21 @@ with graph.as_default():
 
     with sess.as_default():
         with tf.device('/cpu:0'):
-            # Label data is no one-hot encoding.
-            mnist = input_data.read_data_sets("MNIST_data/", one_hot=False)
-
-            # Test Data: 10,000
-            X_raw, y_test = mnist.test.images, mnist.test.labels
-
-            # Reshape input data to 28x28 size to 32x32 size with zero-padding
-            X_test = X_raw.reshape(-1, 28, 28, 1)
-            X_test = np.pad(X_test, ((0, 0), (2, 2), (2, 2), (0, 0)), 'constant')
+            # Load CIFAR-100 dataset
+            (X_train, y_train), (X_test, y_test) = load_data()
 
             # Load the saved meta graph and restore variables
             saver = tf.train.import_meta_graph("{}.meta".format(checkpoint_file))
             saver.restore(sess, checkpoint_file)
 
             # Get the placeholders from the graph by name
-            input_x = graph.get_operation_by_name("Layer_Input/InputX").outputs[0]
+            input_x = graph.get_operation_by_name("input/input_x").outputs[0]
 
             # Tensors we want to evaluate
-            predictions = graph.get_operation_by_name("Layer_Output/Predictions").outputs[0]
+            predictions = graph.get_operation_by_name("accuracy/predictions").outputs[0]
 
             # Generate batches for one epoch
-            batches = helper.Generate_Batches(list(X_test), 1, 50, shuffle=False)
+            batches = helper.Generate_Batches(list(X_test), 1, 128, shuffle=False)
 
             # Collect the predictions here
             all_predictions = []
