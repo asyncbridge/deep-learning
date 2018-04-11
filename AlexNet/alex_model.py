@@ -48,7 +48,7 @@ def fc(input_tensor, in_fc, out_fc, name, is_relu=True):
     return fc
 
 class AlexNetModel(object):
-    def __init__(self, learning_rate=0.01):
+    def __init__(self):
 
         tf.set_random_seed(1234)
 
@@ -61,10 +61,14 @@ class AlexNetModel(object):
             # Color Channel 3(RGB)
             self.input_x = tf.placeholder(tf.float32, [None, 32, 32, 3], name="input_x")
 
+            self.image_summary_original = tf.summary.image("image_original", self.input_x)
+
             # Augmentation
             # #1, Random Crop and Horizontal Reflection
             # #2, Altering RGB Intensities
             augmented_input_x = augment_image(self.input_x)
+
+            self.image_summary_augmented = tf.summary.image("image_augmented", augmented_input_x)
 
             # CIFAR-100 Label (0~99), one-hot vector
             self.input_y= tf.placeholder(tf.int32, [None, 1], name="input_y")
