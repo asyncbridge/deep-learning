@@ -12,7 +12,10 @@ tf.flags.DEFINE_integer("num_of_checkpoints", 5, "Number of Checkpoints")
 tf.flags.DEFINE_float("cross_val_percent", 0.1, "The ratio of cross-validation set in the training set")
 tf.flags.DEFINE_integer("epochs", 10, "Epochs")
 tf.flags.DEFINE_integer("batch_size", 128, "Batch Size")
-tf.flags.DEFINE_float("learning_rate", 1e-2, "Learning Rate")
+tf.flags.DEFINE_float("learning_rate", 0.01, "Learning Rate")
+tf.flags.DEFINE_float("learning_rate_decay", 0.1, "Learning Rate Decay")
+tf.flags.DEFINE_float("momentum", 0.9, "Momentum")
+tf.flags.DEFINE_float("weight_decay", 0.0005, "Weight Decay")
 tf.flags.DEFINE_integer("cross_validation_step_once", 100, "Cross-Validation after this step")
 tf.flags.DEFINE_integer("checkpoint_save_once", 100, "Save checkpoint after this step")
 
@@ -57,18 +60,21 @@ def main(argv=None):
         print("y_test.shape={}", y_test.shape)
 
         # Create a AlexNet model
-        cnn = AlexNetModel()
+        cnn = AlexNetModel(FLAGS.weight_decay)
 
+        # Initialize a session
         session_conf = tf.ConfigProto(
-                        allow_soft_placement=True,
-                        log_device_placement=False)
+            allow_soft_placement=True,
+            log_device_placement=False)
 
         sess = tf.Session(config=session_conf)
 
         # Define Training procedure
         global_step = tf.Variable(0, name="global_step", trainable=False)
-        #optimizer = tf.train.GradientDescentOptimizer(learning_rate=FLAGS.learning_rate)
-        optimizer = tf.train.AdamOptimizer(learning_rate=FLAGS.learning_rate)
+        learning_rate = tf.train.exponential_decay(FLAGS.learning_rate, global_step,
+                                                   100000, FLAGS.learning_rate_decay, staircase=True)
+
+        optimizer = tf.train.MomentumOptimizer(learning_rate, FLAGS.momentum)
 
         grads_and_vars = optimizer.compute_gradients(cnn.loss)
         train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
